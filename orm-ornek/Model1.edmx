@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ormdenemeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ormdenemeModelStoreContainer">
+    <EntitySet Name="kullanici" EntityType="ormdenemeModel.Store.kullanici" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StokSet" EntityType="ormdenemeModel.Store.StokSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MarkalarSet" EntityType="ormdenemeModel.Store.MarkalarSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TedarikcilerSet" EntityType="ormdenemeModel.Store.TedarikcilerSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="MarkalarStok" Association="ormdenemeModel.Store.MarkalarStok">
+      <End Role="Markalar" EntitySet="MarkalarSet" />
+      <End Role="Stok" EntitySet="StokSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="kullanici">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ad" Type="nchar" Nullable="false" MaxLength="10" />
+    <Property Name="soyad" Type="nchar" Nullable="false" MaxLength="10" />
+    <Property Name="kullanici_adi" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="parola" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="StokSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Urun_Ad" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Urun_Barkod" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Urun_Stok_Adet" Type="int" Nullable="false" />
+    <Property Name="Stok_Tarih" Type="datetime" Nullable="false" />
+    <Property Name="Birim_Fiyat_Alis" Type="float" Nullable="false" />
+    <Property Name="Birim_Fiyat_Satıs" Type="float" Nullable="false" />
+    <Property Name="KDV" Type="int" Nullable="false" />
+    <Property Name="Urun_Tedarikci" Type="int" Nullable="false" />
+    <Property Name="MarkaId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MarkalarSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Marka_Ad" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Adres" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" Nullable="false" MaxLength="11" />
+    <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Ülke" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TedarikcilerSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Telefon" Type="nvarchar" Nullable="false" MaxLength="11" />
+    <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="MarkalarStok">
+    <End Role="Markalar" Type="ormdenemeModel.Store.MarkalarSet" Multiplicity="1" />
+    <End Role="Stok" Type="ormdenemeModel.Store.StokSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Markalar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Stok">
+        <PropertyRef Name="MarkaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ormdenemeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="kullanici">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" ConcurrencyMode="None" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="soyad" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="kullanici_adi" Type="String" Nullable="false" />
+          <Property Name="parola" Type="String" Nullable="false" MaxLength="8" />
+        </EntityType>
+        <EntityContainer Name="ormdenemeEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="kullanici" EntityType="Self.kullanici" />
+          <EntitySet Name="StokSet" EntityType="ormdenemeModel.Stok" />
+          <EntitySet Name="MarkalarSet" EntityType="ormdenemeModel.Markalar" />
+          <EntitySet Name="TedarikcilerSet" EntityType="ormdenemeModel.Tedarikciler" />
+          <AssociationSet Name="MarkalarStok" Association="ormdenemeModel.MarkalarStok">
+            <End Role="Markalar" EntitySet="MarkalarSet" />
+            <End Role="Stok" EntitySet="StokSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Stok">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Urun_Ad" Type="String" Nullable="false" />
+          <Property Name="Urun_Barkod" Type="String" Nullable="false" />
+          <Property Name="Urun_Stok_Adet" Type="Int32" Nullable="false" />
+          <Property Name="Stok_Tarih" Type="DateTime" Nullable="false" />
+          <Property Name="Birim_Fiyat_Alis" Type="Double" Nullable="false" />
+          <Property Name="Birim_Fiyat_Satıs" Type="Double" Nullable="false" />
+          <Property Name="KDV" Type="Int32" Nullable="false" />
+          <Property Name="Urun_Tedarikci" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Markalar" Relationship="ormdenemeModel.MarkalarStok" FromRole="Stok" ToRole="Markalar" />
+          <Property Name="MarkaId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Markalar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Marka_Ad" Type="String" Nullable="false" />
+          <Property Name="Adres" Type="String" Nullable="false" />
+          <Property Name="Telefon" Type="String" Nullable="false" MaxLength="11" />
+          <Property Name="Mail" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Ülke" Type="String" Nullable="false" />
+          <NavigationProperty Name="Stok" Relationship="ormdenemeModel.MarkalarStok" FromRole="Markalar" ToRole="Stok" />
+        </EntityType>
+        <EntityType Name="Tedarikciler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" Nullable="false" />
+          <Property Name="Telefon" Type="String" Nullable="false" MaxLength="11" />
+          <Property Name="Mail" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="MarkalarStok">
+          <End Type="ormdenemeModel.Markalar" Role="Markalar" Multiplicity="1" />
+          <End Type="ormdenemeModel.Stok" Role="Stok" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Markalar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stok">
+              <PropertyRef Name="MarkaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ormdenemeModelStoreContainer" CdmEntityContainer="ormdenemeEntities1">
+    <EntitySetMapping Name="kullanici">
+      <EntityTypeMapping TypeName="IsTypeOf(ormdenemeModel.kullanici)">
+        <MappingFragment StoreEntitySet="kullanici">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ad" ColumnName="ad" />
+          <ScalarProperty Name="soyad" ColumnName="soyad" />
+          <ScalarProperty Name="kullanici_adi" ColumnName="kullanici_adi" />
+          <ScalarProperty Name="parola" ColumnName="parola" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StokSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ormdenemeModel.Stok)">
+        <MappingFragment StoreEntitySet="StokSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Urun_Ad" ColumnName="Urun_Ad" />
+          <ScalarProperty Name="Urun_Barkod" ColumnName="Urun_Barkod" />
+          <ScalarProperty Name="Urun_Stok_Adet" ColumnName="Urun_Stok_Adet" />
+          <ScalarProperty Name="Stok_Tarih" ColumnName="Stok_Tarih" />
+          <ScalarProperty Name="Birim_Fiyat_Alis" ColumnName="Birim_Fiyat_Alis" />
+          <ScalarProperty Name="Birim_Fiyat_Satıs" ColumnName="Birim_Fiyat_Satıs" />
+          <ScalarProperty Name="KDV" ColumnName="KDV" />
+          <ScalarProperty Name="Urun_Tedarikci" ColumnName="Urun_Tedarikci" />
+          <ScalarProperty Name="MarkaId" ColumnName="MarkaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MarkalarSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ormdenemeModel.Markalar)">
+        <MappingFragment StoreEntitySet="MarkalarSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Marka_Ad" ColumnName="Marka_Ad" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Ülke" ColumnName="Ülke" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TedarikcilerSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ormdenemeModel.Tedarikciler)">
+        <MappingFragment StoreEntitySet="TedarikcilerSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ad" ColumnName="Ad" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
